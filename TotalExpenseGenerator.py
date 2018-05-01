@@ -17,6 +17,12 @@
 ### is a description of the invoice, dollars=dollars associated with 
 ### invoice, cens=cents associated with invoice. name_of_csv is the 
 ### name of the csv file you wish to generate.
+###
+### Optional arg1 - name of output file
+### Optional arg2 - path of recipts
+###
+### Example Usage - python TotalExpenseGenerator.py result 
+### ElectroneumMinerDocuments/Receipts/home/douglas/Documents/
 ########################################################################
 
 import sys
@@ -31,7 +37,10 @@ else:
     receipts = [f for f in listdir('.') if isfile(f)]
 
 #open the output file to write
-output_file = sys.argv[1]
+if(len(sys.argv) > 1):
+    output_file = sys.argv[1]
+else:
+    output_file = "result"
 output_file = output_file + '.csv'
 f = open(output_file, 'w')
 
@@ -39,7 +48,7 @@ for r in receipts:
     #strip the file extension from the name
     strip_extension = r.split(".")[0]
     #replace dashes with commas
-    comma_separated = string.replace(strip_extension, '-', ',')
+    comma_separated = string.replace(strip_extension, ':', ',')
     #replace _ with .
     result = string.replace(comma_separated, '_', '.')
     f.write(result)
